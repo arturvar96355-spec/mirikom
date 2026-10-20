@@ -1,0 +1,32 @@
+{
+  "name": "mirikom-concept",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "placeholders": "node scripts/placeholders.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "playwright": "^1.64.1",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.27",
+    "lucide-react": "^1.60.0",
+    "motion": "^14.4.0",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.6.7"
+  }
+}
