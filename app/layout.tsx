@@ -12,6 +12,7 @@ const plex = IBM_Plex_Sans({ subsets: ["latin", "cyrillic"], variable: "--font-p
 const plexMono = IBM_Plex_Mono({ subsets: ["latin", "cyrillic"], variable: "--font-plex-mono", display: "swap", weight: ["400", "500"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"),
   title: "Mirikom — сервис BMW с 2000 года, Кунцево",
   description: "Чиним то, что нужно, — и объясняем почему. Независимый сервис BMW на Молодогвардейской, 61с17. Диагностика 6 000 ₽.",
   robots: { index: false, follow: false },
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru" className={`${tektur.variable} ${plex.variable} ${plexMono.variable}`}>
       <body>
         <meta name="robots" content="noindex, nofollow" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "AutoRepair", name: "Mirikom", telephone: site.phone, address: { "@type": "PostalAddress", streetAddress: "Молодогвардейская ул., 61с17", addressLocality: "Москва", addressCountry: "RU" }, foundingDate: "2000", aggregateRating: { "@type": "AggregateRating", ratingValue: site.rating.value, reviewCount: site.rating.count } }) }} />
         <BookingProvider>
           <LenisProvider>{children}</LenisProvider>
           <Cursor />

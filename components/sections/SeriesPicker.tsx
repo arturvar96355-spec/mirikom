@@ -15,7 +15,7 @@ export function SeriesPicker() {
         <SectionHead n="01" eyebrow="Серия" title="Сколько стоит ТО на Вашу машину?" lead="Выберите серию — покажем состав планового обслуживания и цены «от»." />
         <LayoutGroup>
           <div className="mt-12 grid gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               <div role="radiogroup" aria-label="Серия BMW" className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-3 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-6 md:overflow-visible md:px-0 lg:grid-cols-6 [&::-webkit-scrollbar]:hidden" data-lenis-prevent-wheel>
                 {series.map((s) => {
                   const on = s.slug === slug;
@@ -31,7 +31,7 @@ export function SeriesPicker() {
                 })}
               </div>
             </div>
-            <motion.div layout className="chrome-edge relative p-6 md:p-8 lg:col-span-5" transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+            <motion.div layout className="chrome-edge relative min-w-0 p-6 md:p-8 lg:col-span-5" transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div key={slug} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.28 }}>
                   <SeriesPanel s={current} />

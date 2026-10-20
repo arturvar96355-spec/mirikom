@@ -42,13 +42,18 @@ export function HowWeWork() {
   }, []);
 
   return (
-    <section id="process" ref={section} className="relative overflow-hidden bg-graphite py-16 md:flex md:min-h-screen md:items-center md:py-0">
+    <section id="process" ref={section} className="relative overflow-clip bg-graphite py-16 md:flex md:min-h-screen md:items-center md:py-0">
       <div aria-hidden className="bg-mm absolute inset-0 opacity-70" />
-      <div className="container-x relative grid w-full gap-8 md:grid-cols-12 md:items-center md:gap-10">
-        <div className="md:col-span-4 md:self-center max-md:sticky max-md:top-16 max-md:z-20 max-md:-mx-5 max-md:bg-graphite/90 max-md:px-5 max-md:py-3 max-md:backdrop-blur">
-          <p className="eyebrow mb-3 flex items-center gap-3"><span className="text-volt">03</span><span className="h-px w-8 bg-line" />Как работаем</p>
-          <h2 className="h-display text-[clamp(1.9rem,4vw,3.6rem)] max-md:hidden">Пять шагов. Ничего <span className="text-volt">без Вашего «да»</span></h2>
-          <div className="mx-auto max-md:w-28 md:mt-6"><Gauge step={step} total={steps.length} label={steps[step].title} needleRef={needle} arcRef={arc} /></div>
+      <div className="container-x relative flex w-full flex-col gap-6 md:grid md:grid-cols-12 md:items-center md:gap-10">
+        <div className="max-md:contents md:col-span-4 md:self-center">
+          <div>
+            <p className="eyebrow mb-3 flex items-center gap-3"><span className="text-volt">03</span><span className="h-px w-8 bg-line" />Как работаем</p>
+            <h2 className="h-display text-[clamp(1.9rem,4vw,3.6rem)]">Пять шагов. Ничего <span className="text-volt">без Вашего «да»</span></h2>
+          </div>
+          <div className="max-md:sticky max-md:top-16 max-md:z-20 max-md:-mx-5 max-md:flex max-md:items-center max-md:gap-4 max-md:bg-graphite/90 max-md:px-5 max-md:py-2 max-md:backdrop-blur md:mt-6">
+            <div className="max-md:w-24 md:mx-auto md:w-full"><Gauge step={step} total={steps.length} label={steps[step].title} needleRef={needle} arcRef={arc} /></div>
+            <p className="font-mono text-xs uppercase tracking-widest text-mute md:hidden">Этап {step + 1} / {steps.length}<br /><span className="text-chrome">{steps[step].title}</span></p>
+          </div>
         </div>
         <div ref={viewport} className="md:col-span-8 md:overflow-hidden md:[mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)] md:-mr-[calc((100vw-min(100vw,1360px))/2+40px)]">
           <div ref={track} className="flex flex-col gap-5 md:w-max md:flex-row md:gap-6 md:pr-[8vw]">

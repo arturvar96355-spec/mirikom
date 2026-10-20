@@ -16,7 +16,7 @@ export function FinalCTA() {
       <div className="container-x grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-6">
           <p className="eyebrow mb-4 flex items-center gap-3"><span className="text-volt">09</span><span className="h-px w-8 bg-line" />Связь</p>
-          <h2 className="h-display text-[clamp(2.4rem,6.4vw,5.6rem)]"><SplitText as="span" inView text={typograph("Расскажите, что с машиной. Ответим в Telegram")} /></h2>
+          <h2 className="h-display text-[clamp(2.2rem,4.8vw,4.6rem)]"><SplitText as="span" inView text={typograph("Расскажите, что с машиной. Ответим в Telegram")} /></h2>
           <Reveal delay={0.2}>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" href={site.telegramHref} external><Send size={16} /> Telegram</Button>
