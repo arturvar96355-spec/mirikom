@@ -4,6 +4,7 @@ import "./globals.css";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { BookingProvider } from "@/lib/booking-context";
 import { Cursor } from "@/components/motion/Cursor";
+import { BookingModal } from "@/components/widgets/BookingModal";
 import { site } from "@/content/site";
 
 const tektur = Tektur({ subsets: ["latin", "cyrillic"], variable: "--font-tektur", display: "swap", weight: ["400", "500", "600", "700", "800"] });
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BookingProvider>
           <LenisProvider>{children}</LenisProvider>
           <Cursor />
+          <BookingModal />
         </BookingProvider>
         <span className="sr-only">{site.conceptMark}</span>
       </body>
