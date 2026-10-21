@@ -38,10 +38,10 @@ export function Symptoms() {
             ))}
             <div aria-hidden className="absolute left-4 top-3 hidden font-mono text-[10px] uppercase tracking-[0.2em] text-mute md:block">X-RAY · вид сбоку</div>
             <div ref={scroller} className="overflow-x-auto md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-lenis-prevent-wheel>
-            <div className="relative mx-auto w-full min-w-[760px] md:min-w-0" style={{ aspectRatio: "1200 / 460" }}>
+            <div className="relative mx-auto w-full min-w-[760px] md:min-w-0" style={{ aspectRatio: "1320 / 460" }}>
               <CarBlueprint uid="sym" xray={1} active={id} dims className="absolute inset-0 h-full w-full text-chrome" />
               {/* выносные линии */}
-              <svg aria-hidden viewBox="0 0 1200 460" className="pointer-events-none absolute inset-0 hidden h-full w-full md:block" fill="none">
+              <svg aria-hidden viewBox="0 0 1320 460" className="pointer-events-none absolute inset-0 hidden h-full w-full md:block" fill="none">
                 {zones.map((z) => {
                   const a = ZONE_ANCHORS[z.id];
                   const on = z.id === id;
@@ -58,13 +58,13 @@ export function Symptoms() {
                 return (
                   <div key={z.id}>
                     <button aria-label={z.name} aria-pressed={on} onClick={() => setId(z.id)} onMouseEnter={() => hover(z.id)} onMouseLeave={cancel} onFocus={() => setId(z.id)}
-                      className="group absolute grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center" style={{ left: pct(a.x, 1200), top: pct(a.y, 460) }}>
+                      className="group absolute grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center" style={{ left: pct(a.x, 1320), top: pct(a.y, 460) }}>
                       <span aria-hidden className="absolute h-5 w-5 rounded-full border border-volt" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                       <span aria-hidden className={`relative h-3 w-3 rounded-full border border-graphite transition-all ${on ? "scale-125 bg-volt shadow-[0_0_14px_#3d8bff]" : "bg-chrome"}`} />
                     </button>
                     <button tabIndex={-1} aria-hidden onClick={() => setId(z.id)} onMouseEnter={() => hover(z.id)} onMouseLeave={cancel}
                       className={`absolute hidden -translate-y-1/2 whitespace-nowrap border px-2 py-1 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors md:block ${z.label.align === "start" ? "" : "-translate-x-1/2"} ${on ? "border-volt bg-volt/15 text-white" : "border-line bg-graphite/80 text-mute hover:text-chrome"}`}
-                      style={{ left: pct(z.label.x, 1200), top: pct(z.label.y, 460) }}>{z.name}</button>
+                      style={{ left: pct(z.label.x, 1320), top: pct(z.label.y, 460) }}>{z.name}</button>
                   </div>
                 );
               })}

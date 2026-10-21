@@ -93,18 +93,22 @@ const Under = memo(function Under({ id, drawn }: { id: (s: string) => string; dr
   return (
     <>
       <ellipse cx="620" cy={GROUND + 2} rx="600" ry="22" fill={`url(#${id("shadow")})`} />
-      <line x1="40" y1={GROUND} x2="1160" y2={GROUND} stroke={`url(#${id("ground")})`} strokeWidth="1.2" className={drawn ? "g-draw" : ""} />
+      <line x1="40" y1={GROUND} x2="1300" y2={GROUND} stroke={`url(#${id("ground")})`} strokeWidth="1.2" className={drawn ? "g-draw" : ""} />
       <g stroke="#3d8bff" strokeOpacity=".45" strokeWidth=".8" strokeDasharray="14 4 2 4" className={drawn ? "late" : ""}>
         {WHEELS.map((w) => <path key={w.cx} d={`M${w.cx} ${w.cy - 100} L${w.cx} ${GROUND + 14}`} />)}
         <path d={`M${WHEELS[0].cx - 100} ${WHEELS[0].cy} L${WHEELS[1].cx + 100} ${WHEELS[1].cy}`} />
       </g>
-      {/* свет фар: ближний свет конусом вперёд-вниз, блик линзы и пятно на асфальте */}
+      {/* свет фар: ближний свет с чёткой верхней границей (как у настоящего ближнего), блик линзы и пятно на асфальте */}
       <g className={drawn ? "lamp" : ""}>
-        <path d="M1104 276 L1201 265 L1182 335 Z" fill={`url(#${id("cone")})`} />
-        <path d="M1104 276 L1202 278 L1189 324 Z" fill={`url(#${id("cone")})`} />
-        <path d="M1104 276 L1201 290 L1195 313 Z" fill={`url(#${id("cone")})`} />
+        <path d="M1104 276 L1300 290 L1300 446 Z" fill={`url(#${id("cone")})`} />
+        <path d="M1104 276 L1300 293 L1300 408 Z" fill={`url(#${id("cone")})`} />
+        <path d="M1104 276 L1300 297 L1300 380 Z" fill={`url(#${id("cone")})`} />
+        <path d="M1104 276 L1300 300 L1300 355 Z" fill={`url(#${id("cone")})`} />
+        <path d="M1104 276 L1300 304 L1300 332 Z" fill={`url(#${id("cone")})`} />
+        <path d="M1106 277 L1300 290" stroke={`url(#${id("cone")})`} strokeWidth="1.4" />
+        <ellipse cx="1262" cy={GROUND - 1} rx="54" ry="6" fill={`url(#${id("pool")})`} />
         <circle cx="1100" cy="276" r="26" fill={`url(#${id("lamp")})`} />
-        <path d="M1072 276 L1128 276" stroke={`url(#${id("streak")})`} strokeWidth="1.2" />
+        <path d="M1068 276 L1134 276" stroke={`url(#${id("streak")})`} strokeWidth="1.2" />
       </g>
       <path d={BODY} fill={`url(#${id("body")})`} stroke="none" className={drawn ? "fill-in" : ""} />
       <path d={GLASS_REAR} fill={`url(#${id("glass")})`} stroke="none" className={drawn ? "fill-in" : ""} />
@@ -132,7 +136,7 @@ const Over = memo(function Over({ id, drawn, spin, dims }: { id: (s: string) => 
         <path d={BUMPER_VENT} strokeOpacity=".7" /><path d={EXHAUST_TIP} /><path d={NOSE_GRILLE} stroke="#5aa0ff" strokeOpacity=".9" />
         {Array.from({ length: 5 }, (_, i) => <path key={i} d={`M${1064 + i * 5.5} 360 L${1064 + i * 5.5} 369`} strokeOpacity=".5" />)}
       </g>
-      <path d={HEADLIGHT} fill="#cfe3ff" fillOpacity=".14" stroke="#cfe3ff" strokeWidth="1.2" className={drawn ? "late" : ""} />
+      <path d={HEADLIGHT} fill="#cfe3ff" fillOpacity=".2" stroke="#e6f1ff" strokeWidth="1.4" className={drawn ? "late" : ""} style={{ filter: "drop-shadow(0 0 3px rgba(190,215,255,.9))" }} />
       <path d={TAILLIGHT} fill="#ff5a1f" fillOpacity=".25" stroke="#ff5a1f" strokeOpacity=".9" strokeWidth="1.2" className={drawn ? "late" : ""} />
       <path d={SWAGE} stroke={`url(#${id("spec")})`} strokeWidth="1.6" className={drawn ? "late" : ""} />
       <g stroke="#d9dee5" strokeOpacity=".9" strokeWidth="1.2" className={drawn ? "wheels" : ""}>
@@ -155,9 +159,9 @@ const Defs = memo(function Defs({ id }: { id: (s: string) => string }) {
       <linearGradient id={id("edge")} x1="80" y1="0" x2="1114" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#8a94a3" /><stop offset=".45" stopColor="#f1f5fa" /><stop offset="1" stopColor="#9fb4d0" /></linearGradient>
       <linearGradient id={id("glass")} x1="0" y1="130" x2="0" y2="214" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#3d8bff" stopOpacity=".3" /><stop offset="1" stopColor="#3d8bff" stopOpacity=".03" /></linearGradient>
       <linearGradient id={id("spec")} x1="128" y1="0" x2="1066" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fff" stopOpacity="0" /><stop offset=".5" stopColor="#fff" stopOpacity=".8" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></linearGradient>
-      <linearGradient id={id("ground")} x1="40" y1="0" x2="1160" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#3d8bff" stopOpacity="0" /><stop offset=".5" stopColor="#8fb8ff" stopOpacity=".7" /><stop offset="1" stopColor="#3d8bff" stopOpacity="0" /></linearGradient>
+      <linearGradient id={id("ground")} x1="40" y1="0" x2="1300" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#3d8bff" stopOpacity="0" /><stop offset=".5" stopColor="#8fb8ff" stopOpacity=".7" /><stop offset="1" stopColor="#3d8bff" stopOpacity="0" /></linearGradient>
       <radialGradient id={id("lamp")} cx="1100" cy="276" r="26" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fff" stopOpacity="1" /><stop offset=".3" stopColor="#d6e8ff" stopOpacity=".7" /><stop offset="1" stopColor="#9fc4ff" stopOpacity="0" /></radialGradient>
-      <linearGradient id={id("cone")} x1="1104" y1="0" x2="1199" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#f1f7ff" stopOpacity=".42" /><stop offset=".5" stopColor="#b5d3ff" stopOpacity=".1" /><stop offset="1" stopColor="#9fc4ff" stopOpacity="0" /></linearGradient>
+      <linearGradient id={id("cone")} x1="1104" y1="0" x2="1300" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#f1f7ff" stopOpacity=".26" /><stop offset=".45" stopColor="#b5d3ff" stopOpacity=".08" /><stop offset="1" stopColor="#9fc4ff" stopOpacity="0" /></linearGradient>
       <radialGradient id={id("plume")} cx=".5" cy=".5" r=".5"><stop offset="0" stopColor="#e3efff" stopOpacity=".5" /><stop offset=".5" stopColor="#9fc4ff" stopOpacity=".16" /><stop offset="1" stopColor="#9fc4ff" stopOpacity="0" /></radialGradient>
       <radialGradient id={id("pool")} cx=".5" cy=".5" r=".5"><stop offset="0" stopColor="#cfe3ff" stopOpacity=".55" /><stop offset="1" stopColor="#cfe3ff" stopOpacity="0" /></radialGradient>
       <linearGradient id={id("streak")} x1="1072" y1="0" x2="1128" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fff" stopOpacity="0" /><stop offset=".5" stopColor="#fff" stopOpacity=".9" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></linearGradient>
