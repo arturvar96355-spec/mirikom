@@ -103,12 +103,11 @@ body {
 [data-drawn="1"] .g-draw { opacity: 0; animation: fadein 1s ease .1s forwards; }
 [data-drawn="1"] .fill-in { opacity: 0; animation: fadein 1.2s ease 1.6s forwards; }
 [data-drawn="1"] .late { opacity: 0; animation: fadein 1s ease 2.2s forwards; }
-[data-drawn="1"] .lamp { opacity: 0; animation: fadein 1.4s ease 3.9s forwards; }
 .beam-rect { animation: beam-move 1.8s cubic-bezier(.55,0,.3,1) 2.3s both; }
 @keyframes beam-move { from { transform: translateX(0); } to { transform: translateX(1560px); } }
 @media (prefers-reduced-motion: reduce) {
   [data-drawn="1"] .draw path, [data-drawn="1"] .w-draw { stroke-dashoffset: 0; animation: none; }
-  [data-drawn="1"] .wheels, [data-drawn="1"] .g-draw, [data-drawn="1"] .fill-in, [data-drawn="1"] .late, [data-drawn="1"] .lamp { opacity: 1; animation: none; }
+  [data-drawn="1"] .wheels, [data-drawn="1"] .g-draw, [data-drawn="1"] .fill-in, [data-drawn="1"] .late { opacity: 1; animation: none; }
   .beam-rect { animation: none; transform: translateX(2000px); }
   .wheel-layer { animation: none !important; opacity: 1 !important; }
 }
