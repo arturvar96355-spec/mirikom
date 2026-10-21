@@ -1,7 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Camera, ClipboardCheck, ScanLine, ShieldCheck, Wrench } from "lucide-react";
 import { steps } from "@/content/process";
 import { Gauge, START, SWEEP } from "@/components/widgets/Speedometer";
@@ -19,26 +17,33 @@ export function HowWeWork() {
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-    const apply = (p: number) => {
-      gsap.set(needle.current, { rotation: START + SWEEP * p, svgOrigin: "110 110" });
-      if (arc.current) arc.current.style.strokeDashoffset = String(1 - p);
-      const s = Math.min(steps.length - 1, Math.floor(p * steps.length));
-      setStep((o) => (o === s ? o : s));
-    };
-    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-      const dist = () => Math.max(0, (track.current?.scrollWidth ?? 0) - (viewport.current?.clientWidth ?? 0));
-      gsap.to(track.current, {
-        x: () => -dist(), ease: "none",
-        scrollTrigger: { trigger: section.current, start: "top top", end: () => `+=${Math.max(dist(), window.innerHeight * 3)}`, pin: true, scrub: 0.6, invalidateOnRefresh: true, onUpdate: (self) => apply(self.progress) },
+    let revert = () => {};
+    let dead = false;
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([import("gsap"), import("gsap/ScrollTrigger")]);
+      if (dead) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const mm = gsap.matchMedia();
+      const apply = (p: number) => {
+        gsap.set(needle.current, { rotation: START + SWEEP * p, svgOrigin: "110 110" });
+        if (arc.current) arc.current.style.strokeDashoffset = String(1 - p);
+        const s = Math.min(steps.length - 1, Math.floor(p * steps.length));
+        setStep((o) => (o === s ? o : s));
+      };
+      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+        const dist = () => Math.max(0, (track.current?.scrollWidth ?? 0) - (viewport.current?.clientWidth ?? 0));
+        gsap.to(track.current, {
+          x: () => -dist(), ease: "none",
+          scrollTrigger: { trigger: section.current, start: "top top", end: () => `+=${Math.max(dist(), window.innerHeight * 3)}`, pin: true, scrub: 0.6, invalidateOnRefresh: true, onUpdate: (self) => apply(self.progress) },
+        });
       });
-    });
-    mm.add("(max-width: 767px), (prefers-reduced-motion: reduce)", () => {
-      ScrollTrigger.create({ trigger: track.current, start: "top 70%", end: "bottom 60%", scrub: true, onUpdate: (self) => apply(self.progress) });
-    });
-    apply(0);
-    return () => mm.revert();
+      mm.add("(max-width: 767px), (prefers-reduced-motion: reduce)", () => {
+        ScrollTrigger.create({ trigger: track.current, start: "top 70%", end: "bottom 60%", scrub: true, onUpdate: (self) => apply(self.progress) });
+      });
+      apply(0);
+      revert = () => mm.revert();
+    })();
+    return () => { dead = true; revert(); };
   }, []);
 
   return (

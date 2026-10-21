@@ -25,7 +25,10 @@ export function Footer() {
           <p className="pt-2 text-mute"><Rich>{site.legalEntity}</Rich></p>
         </div>
       </div>
-      <div className="container-x mt-12 border-t border-line pt-6 text-xs text-mute">{site.conceptMark}</div>
+      <div aria-hidden className="container-x mt-14 select-none overflow-hidden">
+        <div className="h-display whitespace-nowrap text-[clamp(3.2rem,21.5vw,19.5rem)] leading-[.85] text-transparent" style={{ WebkitTextStroke: "1px rgba(217,222,229,0.22)", backgroundImage: "linear-gradient(180deg, rgba(61,139,255,.5), transparent 75%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>MIRIKOM</div>
+      </div>
+      <div className="container-x mt-8 border-t border-line pt-6 text-xs text-mute">{site.conceptMark}</div>
     </footer>
   );
 }

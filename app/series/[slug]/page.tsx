@@ -4,7 +4,7 @@ import { getSeries, series } from "@/content/series";
 import { PageShell } from "@/components/sections/PageShell";
 import { SeriesPanel } from "@/components/widgets/SeriesPanel";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { CarSilhouette } from "@/components/art/CarSilhouette";
+import { CarBlueprint } from "@/components/art/CarBlueprint";
 
 export function generateStaticParams() {
   return series.map((s) => ({ slug: s.slug }));
@@ -28,7 +28,7 @@ export default async function SeriesPage({ params }: { params: Promise<{ slug: s
           <h1 className="h-display mt-4 text-[clamp(3rem,9vw,8rem)]">ТО {s.title}</h1>
           <div className="mt-10 grid gap-10 lg:grid-cols-12">
             <div className="chrome-edge p-6 md:p-8 lg:col-span-6"><SeriesPanel s={s} /></div>
-            <div className="hidden text-chrome/40 lg:col-span-6 lg:block"><CarSilhouette className="mt-10" /></div>
+            <div className="hidden text-chrome/40 lg:col-span-6 lg:block"><CarBlueprint uid="ser" xray={0.8} className="mt-10 h-auto w-full" /></div>
           </div>
         </div>
       </section>

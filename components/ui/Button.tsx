@@ -20,9 +20,9 @@ export function Button({ children, href, onClick, variant = "primary", size = "m
   const cls = cn(
     "cut group relative inline-flex min-h-12 items-center justify-center gap-2 px-6 font-display text-[13px] font-semibold uppercase tracking-[0.12em] transition-[background,color,transform] duration-300 select-none",
     size === "lg" && "min-h-14 px-8 text-sm",
-    variant === "primary" && "bg-volt text-white hover:bg-white hover:text-graphite",
+    variant === "primary" && "bg-volt text-graphite hover:bg-white",
     variant === "ghost" && "bg-white/[0.04] text-chrome ring-1 ring-inset ring-line hover:bg-chrome hover:text-graphite",
-    variant === "signal" && "bg-signal text-white hover:bg-white hover:text-graphite",
+    variant === "signal" && "bg-signal text-graphite hover:bg-white",
     disabled && "pointer-events-none opacity-50",
     className,
   );

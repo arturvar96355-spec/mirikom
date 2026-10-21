@@ -27,7 +27,7 @@ export function Header() {
     <>
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || menu ? "bg-graphite/80 backdrop-blur-xl border-b border-line/70" : "bg-transparent border-b border-transparent"}`}>
         <div className="container-x flex h-16 items-center justify-between gap-6 md:h-20">
-          <a href="/" className="group flex flex-col leading-none" aria-label="Mirikom — на главную">
+          <a href="/" className="group flex flex-col leading-none">
             <span className="font-display text-xl font-bold tracking-[0.14em] text-chrome md:text-2xl">MIRI<span className="text-volt">KOM</span></span>
             <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-mute">{site.tagline}</span>
           </a>

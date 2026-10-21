@@ -3,13 +3,16 @@ import { Tektur, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { BookingProvider } from "@/lib/booking-context";
-import { Cursor } from "@/components/motion/Cursor";
-import { BookingModal } from "@/components/widgets/BookingModal";
+import dynamic from "next/dynamic";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
+
+const Cursor = dynamic(() => import("@/components/motion/Cursor").then((m) => m.Cursor));
+const BookingModal = dynamic(() => import("@/components/widgets/BookingModal").then((m) => m.BookingModal));
 import { site } from "@/content/site";
 
-const tektur = Tektur({ subsets: ["latin", "cyrillic"], variable: "--font-tektur", display: "swap", weight: ["400", "500", "600", "700", "800"] });
-const plex = IBM_Plex_Sans({ subsets: ["latin", "cyrillic"], variable: "--font-plex", display: "swap", weight: ["300", "400", "500", "600"] });
-const plexMono = IBM_Plex_Mono({ subsets: ["latin", "cyrillic"], variable: "--font-plex-mono", display: "swap", weight: ["400", "500"] });
+const tektur = Tektur({ subsets: ["latin", "cyrillic"], variable: "--font-tektur", display: "swap" });
+const plex = IBM_Plex_Sans({ subsets: ["latin", "cyrillic"], variable: "--font-plex", display: "swap", weight: ["400", "500"] });
+const plexMono = IBM_Plex_Mono({ subsets: ["latin", "cyrillic"], variable: "--font-plex-mono", display: "swap", weight: ["400"], preload: false });
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
@@ -30,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "AutoRepair", name: "Mirikom", telephone: site.phone, address: { "@type": "PostalAddress", streetAddress: "Молодогвардейская ул., 61с17", addressLocality: "Москва", addressCountry: "RU" }, foundingDate: "2000", aggregateRating: { "@type": "AggregateRating", ratingValue: site.rating.value, reviewCount: site.rating.count } }) }} />
         <BookingProvider>
           <LenisProvider>{children}</LenisProvider>
+          <ScrollProgress />
           <Cursor />
           <BookingModal />
         </BookingProvider>

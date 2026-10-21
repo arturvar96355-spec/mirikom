@@ -1,5 +1,6 @@
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
+import { StatsBand } from "@/components/sections/StatsBand";
 import { SeriesPicker } from "@/components/sections/SeriesPicker";
 import { Symptoms } from "@/components/sections/Symptoms";
 import { HowWeWork } from "@/components/sections/HowWeWork";
@@ -19,6 +20,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <StatsBand />
         <SeriesPicker />
         <Symptoms />
         <HowWeWork />
