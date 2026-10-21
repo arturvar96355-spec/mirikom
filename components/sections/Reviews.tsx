@@ -13,7 +13,7 @@ export function Reviews() {
       <div className="container-x">
         <SectionHead n="07" eyebrow="Отзывы" title="Что пишут на Яндекс Картах" />
         <div className="mt-12 grid gap-8 lg:grid-cols-12">
-          <Reveal className="lg:col-span-4">
+          <Reveal className="lg:col-span-4" blur={false}>
             <div className="chrome-edge relative p-8">
               <div className="font-display text-[6.5rem] leading-none text-chrome"><CountUp to={site.rating.value} decimals={1} /><span className="text-volt">★</span></div>
               <p className="mt-2 font-mono text-sm text-mute"><CountUp to={site.rating.count} /> оценки · Яндекс Карты</p>

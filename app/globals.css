@@ -92,13 +92,15 @@ body {
 /* ===== схема автомобиля ===== */
 .xr { stroke: #8fa3bd; stroke-opacity: .55; stroke-width: 1.1; color: #8fa3bd; transition: stroke .4s, stroke-opacity .4s, fill .4s, filter .4s; }
 .xr[data-state="dim"] { stroke-opacity: .22; }
-.xr[data-state="true"] { stroke: #5aa0ff; stroke-opacity: 1; stroke-width: 1.7; color: #5aa0ff; filter: drop-shadow(0 0 5px rgba(61,139,255,.9)); animation: xr-pulse 2.4s ease-in-out infinite; }
-@keyframes xr-pulse { 50% { stroke-opacity: .7; } }
-.wheel-spin { animation: spin 24s linear infinite; }
+.xr[data-state="true"] { stroke: #5aa0ff; stroke-opacity: 1; stroke-width: 1.7; color: #5aa0ff; filter: drop-shadow(0 0 5px rgba(61,139,255,.9)); }
+.wheel-layer { width: 10%; transform-origin: 50% 50%; will-change: transform; animation: spin 24s linear infinite; }
+@media (max-width: 767px) { .wheel-layer { animation: none; } }
 @keyframes spin { to { transform: rotate(360deg); } }
-@keyframes g-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+/* после прорисовки штрих-режим снимается: сплошная линия растеризуется заметно быстрее */
+@keyframes g-draw { 0% { stroke-dasharray: 1; stroke-dashoffset: 1; } 99% { stroke-dasharray: 1; stroke-dashoffset: 0; } 100% { stroke-dasharray: none; stroke-dashoffset: 0; } }
 [data-drawn="1"] .draw path, [data-drawn="1"] .w-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: g-draw 2.2s var(--ease-out-expo) .2s forwards; }
 [data-drawn="1"] .wheels { opacity: 0; animation: fadein .9s ease 1.4s forwards; }
+[data-drawn="1"] .wheel-layer { opacity: 0; animation: fadein .9s ease 1.4s forwards, spin 24s linear 1.4s infinite; }
 [data-drawn="1"] .g-draw { opacity: 0; animation: fadein 1s ease .1s forwards; }
 [data-drawn="1"] .fill-in { opacity: 0; animation: fadein 1.2s ease 1.6s forwards; }
 [data-drawn="1"] .late { opacity: 0; animation: fadein 1s ease 2.2s forwards; }
@@ -109,7 +111,7 @@ body {
   [data-drawn="1"] .draw path, [data-drawn="1"] .w-draw { stroke-dashoffset: 0; animation: none; }
   [data-drawn="1"] .wheels, [data-drawn="1"] .g-draw, [data-drawn="1"] .fill-in, [data-drawn="1"] .late, [data-drawn="1"] .lamp { opacity: 1; animation: none; }
   .beam-rect { animation: none; transform: translateX(2000px); }
-  .wheel-spin, .xr[data-state="true"] { animation: none; }
+  .wheel-layer { animation: none !important; opacity: 1 !important; }
 }
 
 /* оптимизация: не рисуем то, что далеко за экраном */
@@ -119,3 +121,6 @@ body {
 .word-up { animation: word-up .8s var(--ease-out-expo) both; }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 .rise { animation: rise .7s var(--ease-out-expo) both; }
+
+/* вне экрана — все бесконечные анимации на паузе */
+[data-paused="1"] *, [data-paused="1"] { animation-play-state: paused !important; }

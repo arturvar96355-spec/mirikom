@@ -16,7 +16,7 @@ export function ServicesPrices({ standalone = false }: { standalone?: boolean })
     <section id="services" className={`relative scroll-mt-20 py-24 md:py-36 ${standalone ? "pt-40" : ""}`}>
       <div className="container-x">
         <SectionHead n="04" eyebrow="Услуги и цены" title="Цена — до начала работ" lead="Если в процессе нашли ещё что-то — сначала звоним Вам." />
-        <Reveal className="mt-12">
+        <Reveal className="mt-12" blur={false}>
           <div className="border-t border-line">
             {serviceGroups.map((g, gi) => {
               const on = open === g.id;

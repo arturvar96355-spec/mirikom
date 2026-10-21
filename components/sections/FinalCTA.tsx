@@ -24,7 +24,7 @@ export function FinalCTA() {
             </div>
           </Reveal>
         </div>
-        <Reveal className="lg:col-span-6" delay={0.15}>
+        <Reveal className="lg:col-span-6" delay={0.15} blur={false}>
           <div className="chrome-edge p-6 md:p-8"><BookingForm /></div>
         </Reveal>
       </div>

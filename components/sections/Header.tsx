@@ -25,7 +25,7 @@ export function Header() {
 
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || menu ? "bg-graphite/80 backdrop-blur-xl border-b border-line/70" : "bg-transparent border-b border-transparent"}`}>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-500 ${scrolled || menu ? "bg-graphite/85 backdrop-blur-md border-b border-line/70" : "bg-transparent border-b border-transparent"} [transform:translateZ(0)]`}>
         <div className="container-x flex h-16 items-center justify-between gap-6 md:h-20">
           <a href="/" className="group flex flex-col leading-none">
             <span className="font-display text-xl font-bold tracking-[0.14em] text-chrome md:text-2xl">MIRI<span className="text-volt">KOM</span></span>

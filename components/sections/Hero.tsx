@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { animate, motion, useMotionValue, useMotionValueEvent, useScroll, useSpring, useTransform } from "motion/react";
 import { Send } from "lucide-react";
 import { site } from "@/content/site";
 import { CarBlueprint } from "@/components/art/CarBlueprint";
@@ -8,6 +8,7 @@ import { Grain } from "@/components/art/Grain";
 import { SplitText } from "@/components/motion/SplitText";
 import { CountUp } from "@/components/motion/CountUp";
 import { Button } from "@/components/ui/Button";
+import { usePauseOffscreen } from "@/components/motion/usePauseOffscreen";
 import { useBooking } from "@/lib/booking-context";
 import { typograph, formatRub } from "@/lib/typograph";
 
@@ -17,7 +18,16 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const gridY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const carY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const xray = useTransform(scrollYProgress, [0, 0.35], [0.18, 1]);
+  // «рентген» проявляется плавным переходом по времени, а не покадрово от скролла — SVG не перерисовывается на каждом кадре прокрутки
+  const xray = useMotionValue(0.18);
+  const xrayTarget = useRef(0.18);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const t = v > 0.08 ? 1 : 0.18;
+    if (xrayTarget.current === t) return;
+    xrayTarget.current = t;
+    animate(xray, t, { duration: 0.9, ease: [0.22, 1, 0.36, 1] });
+  });
+  usePauseOffscreen(ref);
   const mx = useMotionValue(0);
   const px = useSpring(mx, { stiffness: 60, damping: 18 });
   const gx = useTransform(px, (v) => -v * 0.5);
@@ -31,7 +41,7 @@ export function Hero() {
   return (
     <section ref={ref} className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-graphite max-md:pb-16">
       {/* миллиметровка + параллакс */}
-      <motion.div aria-hidden style={{ y: gridY, x: gx }} className="bg-mm absolute inset-[-10%_0_-10%_0] opacity-90 [mask-image:radial-gradient(ellipse_80%_70%_at_60%_60%,#000,transparent)]" />
+      <motion.div aria-hidden style={{ y: gridY, x: gx, willChange: "transform" }} className="bg-mm absolute inset-[-10%_0_-10%_0] opacity-90 [mask-image:radial-gradient(ellipse_80%_70%_at_60%_60%,#000,transparent)]" />
       {/* свет фар на полу */}
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-[55%] bg-[radial-gradient(ellipse_60%_55%_at_70%_100%,rgba(61,139,255,0.22),transparent_70%)]" />
 
@@ -50,7 +60,7 @@ export function Hero() {
       </div>
 
       {/* авто */}
-      <motion.div style={{ y: carY, x: px }} className="relative z-0 -ml-[6%] mt-4 w-[112%] md:ml-0 md:absolute md:bottom-[5%] md:left-[25%] md:mt-0 md:w-[77%]">
+      <motion.div style={{ y: carY, x: px, willChange: "transform" }} className="relative z-0 -ml-[6%] mt-4 w-[112%] md:ml-0 md:absolute md:bottom-[5%] md:left-[25%] md:mt-0 md:w-[77%]">
         <CarBlueprint uid="hero" drawn beam spin xray={xray} dims className="relative h-auto w-full overflow-visible text-chrome" />
       </motion.div>
 

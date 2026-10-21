@@ -5,6 +5,7 @@ import { zones } from "@/content/symptoms";
 import { site } from "@/content/site";
 import { CarBlueprint } from "@/components/art/CarBlueprint";
 import { ZONE_ANCHORS } from "@/components/art/carGeometry";
+import { usePauseOffscreen } from "@/components/motion/usePauseOffscreen";
 import { SectionHead } from "@/components/ui/SectionHead";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
@@ -18,14 +19,16 @@ export function Symptoms() {
   const zone = zones.find((z) => z.id === id)!;
   const { openBooking } = useBooking();
   const scroller = useRef<HTMLDivElement>(null);
+  const sec = useRef<HTMLElement>(null);
+  usePauseOffscreen(sec);
   useEffect(() => { const el = scroller.current; if (el && window.innerWidth < 768) el.scrollLeft = el.scrollWidth; }, []);
   return (
-    <section className="relative border-y border-line bg-[#0e1115] py-24 md:py-36">
+    <section ref={sec} className="relative border-y border-line bg-[#0e1115] py-24 md:py-36">
       <div aria-hidden className="bg-mm absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000,transparent)]" />
       <div className="container-x relative">
         <SectionHead n="02" eyebrow="Диагностика" title="Что беспокоит?" lead="Нажмите на узел, который шумит, стучит или горит на панели. Покажем типичные симптомы и запишем на диагностику." />
 
-        <Reveal className="mt-12">
+        <Reveal className="mt-12" blur={false}>
           <div className="relative border border-line bg-graphite/60">
             {["left-0 top-0 border-l border-t", "right-0 top-0 border-r border-t", "left-0 bottom-0 border-b border-l", "right-0 bottom-0 border-b border-r"].map((c) => (
               <span key={c} aria-hidden className={`absolute h-3 w-3 border-volt ${c}`} />

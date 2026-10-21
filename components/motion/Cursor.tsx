@@ -7,20 +7,27 @@ export function Cursor() {
   useEffect(() => {
     if (!window.matchMedia("(pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     document.documentElement.classList.add("has-cursor");
-    let x = -100, y = -100, rx = -100, ry = -100, raf = 0, shrink = false;
+    let x = -100, y = -100, rx = -100, ry = -100, raf = 0, shrink = false, running = false, lastShrink = false;
+    const draw = () => {
+      rx += (x - rx) * 0.22; ry += (y - ry) * 0.22;
+      if (ring.current) ring.current.style.transform = `translate3d(${rx - 22}px, ${ry - 22}px, 0) scale(${shrink ? 0.55 : 1})`;
+      if (dot.current) dot.current.style.transform = `translate3d(${x - 2}px, ${y - 2}px, 0)`;
+    };
+    const tick = () => {
+      draw();
+      // кольцо догнало курсор и состояние не меняется — засыпаем до следующего движения мыши
+      if (Math.abs(x - rx) < 0.3 && Math.abs(y - ry) < 0.3 && shrink === lastShrink) { running = false; return; }
+      lastShrink = shrink;
+      raf = requestAnimationFrame(tick);
+    };
+    const wake = () => { if (!running) { running = true; raf = requestAnimationFrame(tick); } };
     const move = (e: MouseEvent) => {
       x = e.clientX; y = e.clientY;
       const t = e.target as HTMLElement | null;
       shrink = !!t?.closest("a,button,input,select,textarea,[role=button],[data-hover]");
+      wake();
     };
-    const tick = () => {
-      rx += (x - rx) * 0.2; ry += (y - ry) * 0.2;
-      if (ring.current) ring.current.style.transform = `translate3d(${rx - 22}px, ${ry - 22}px, 0) scale(${shrink ? 0.55 : 1})`;
-      if (dot.current) dot.current.style.transform = `translate3d(${x - 2}px, ${y - 2}px, 0)`;
-      raf = requestAnimationFrame(tick);
-    };
-    window.addEventListener("mousemove", move);
-    raf = requestAnimationFrame(tick);
+    window.addEventListener("mousemove", move, { passive: true });
     return () => { window.removeEventListener("mousemove", move); cancelAnimationFrame(raf); document.documentElement.classList.remove("has-cursor"); };
   }, []);
   return (

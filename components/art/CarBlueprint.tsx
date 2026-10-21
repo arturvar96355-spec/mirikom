@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { motion, type MotionValue } from "motion/react";
 import {
   BODY, GLASS_FRONT, GLASS_REAR, MIRROR, PANEL_LINES, HANDLES, HEADLIGHT, TAILLIGHT, BUMPER_VENT, EXHAUST_TIP,
@@ -23,12 +24,32 @@ type Props = {
 
 const rad = (d: number) => (d * Math.PI) / 180;
 
-function Wheel({ cx, cy, spin }: { cx: number; cy: number; spin?: boolean }) {
-  const spokes = Array.from({ length: 5 }, (_, i) => {
+function spokePaths(cx: number, cy: number) {
+  return Array.from({ length: 5 }, (_, i) => {
     const a = i * 72 - 90;
     const p = (r: number, da: number) => `${(cx + Math.cos(rad(a + da)) * r).toFixed(1)} ${(cy + Math.sin(rad(a + da)) * r).toFixed(1)}`;
     return `M${p(15, -13)} L${p(39, -5)} L${p(39, 5)} L${p(15, 13)} Z`;
   });
+}
+function Bolts({ cx, cy }: { cx: number; cy: number }) {
+  return <>{Array.from({ length: 5 }, (_, i) => {
+    const a = i * 72 - 54;
+    return <circle key={i} cx={cx + Math.cos(rad(a)) * 9} cy={cy + Math.sin(rad(a)) * 9} r="1.6" fill="currentColor" stroke="none" />;
+  })}</>;
+}
+
+/** Вращающиеся спицы — отдельный слой поверх схемы: анимация идёт на композиторе и не перерисовывает весь SVG. */
+function SpinLayer({ cx, cy }: { cx: number; cy: number }) {
+  return (
+    <svg aria-hidden viewBox="-60 -60 120 120" className="wheel-layer pointer-events-none absolute" fill="none" stroke="#d9dee5" strokeOpacity=".9" strokeWidth="1.2" strokeLinejoin="round" color="#d9dee5"
+      style={{ left: `${((cx - 60) / VB.w) * 100}%`, top: `${((cy - 60) / VB.h) * 100}%`, width: `${(120 / VB.w) * 100}%`, height: `${(120 / VB.h) * 100}%` }}>
+      {spokePaths(0, 0).map((d, i) => <path key={i} d={d} fill="rgba(217,222,229,0.05)" />)}
+      <Bolts cx={0} cy={0} />
+    </svg>
+  );
+}
+
+function Wheel({ cx, cy, spin }: { cx: number; cy: number; spin?: boolean }) {
   return (
     <g>
       <circle cx={cx} cy={cy} r="60" pathLength={1} className="w-draw" strokeWidth="2" />
@@ -36,13 +57,12 @@ function Wheel({ cx, cy, spin }: { cx: number; cy: number; spin?: boolean }) {
       <circle cx={cx} cy={cy} r="49" opacity=".6" />
       <circle cx={cx} cy={cy} r="43" strokeWidth="1.6" />
       <circle cx={cx} cy={cy} r="40" opacity=".5" />
-      <g className={spin ? "wheel-spin" : ""} style={{ transformOrigin: `${cx}px ${cy}px` }}>
-        {spokes.map((d, i) => <path key={i} d={d} fill="rgba(217,222,229,0.05)" />)}
-        {Array.from({ length: 5 }, (_, i) => {
-          const a = i * 72 - 54;
-          return <circle key={i} cx={cx + Math.cos(rad(a)) * 9} cy={cy + Math.sin(rad(a)) * 9} r="1.6" fill="currentColor" stroke="none" />;
-        })}
-      </g>
+      {!spin && (
+        <g>
+          {spokePaths(cx, cy).map((d, i) => <path key={i} d={d} fill="rgba(217,222,229,0.05)" />)}
+          <Bolts cx={cx} cy={cy} />
+        </g>
+      )}
       <circle cx={cx} cy={cy} r="12" />
       <circle cx={cx} cy={cy} r="5" fill="currentColor" stroke="none" opacity=".7" />
     </g>
@@ -67,9 +87,14 @@ function Spring({ x, top, bot }: { x: number; top: number; bot: number }) {
 
 export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, active = null, dims }: Props) {
   const on = (z: string) => (active === z ? "true" : active ? "dim" : "idle");
+  const [beamOn, setBeamOn] = useState(!!beam);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setBeamOn(false);
+  }, []);
   const id = (s: string) => `${uid}-${s}`;
   return (
-    <svg viewBox={`0 0 ${VB.w} ${VB.h}`} fill="none" strokeLinejoin="round" strokeLinecap="round" className={className} role="img" aria-label="Схема автомобиля" data-drawn={drawn ? "1" : "0"}>
+    <div className={className} data-drawn={drawn ? "1" : "0"} style={{ contain: "layout paint style", transform: "translateZ(0)" }}>
+    <svg viewBox={`0 0 ${VB.w} ${VB.h}`} fill="none" strokeLinejoin="round" strokeLinecap="round" className="block h-auto w-full overflow-visible" role="img" aria-label="Схема автомобиля">
       <defs>
         <linearGradient id={id("body")} x1="0" y1="140" x2="0" y2="380" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#1f2630" /><stop offset=".55" stopColor="#12161c" /><stop offset="1" stopColor="#0b0d10" />
@@ -94,7 +119,7 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
         </radialGradient>
         <linearGradient id={id("sweep")} x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#fff" stopOpacity="0" /><stop offset=".5" stopColor="#fff" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></linearGradient>
         <mask id={id("beamMask")} maskUnits="userSpaceOnUse" x="0" y="0" width={VB.w} height={VB.h}>
-          <rect className="beam-rect" x="-360" y="0" width="360" height={VB.h} fill={`url(#${id("sweep")})`} />
+          <rect className="beam-rect" onAnimationEnd={() => setBeamOn(false)} x="-360" y="0" width="360" height={VB.h} fill={`url(#${id("sweep")})`} />
         </mask>
         <g id={id("outline")}>
           <path d={BODY} /><path d={GLASS_REAR} /><path d={GLASS_FRONT} />
@@ -111,7 +136,7 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
       </g>
 
       {/* свет фар */}
-      <ellipse cx="1128" cy="318" rx="110" ry="64" fill={`url(#${id("lamp")})`} className={drawn ? "lamp" : ""} style={{ mixBlendMode: "screen" }} />
+      <ellipse cx="1128" cy="318" rx="110" ry="64" fill={`url(#${id("lamp")})`} className={drawn ? "lamp" : ""} />
 
       {/* кузов */}
       <path d={BODY} fill={`url(#${id("body")})`} stroke="none" className={drawn ? "fill-in" : ""} />
@@ -150,7 +175,7 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
       </g>
 
       {/* световой проход */}
-      {beam && (
+      {beamOn && (
         <g mask={`url(#${id("beamMask")})`} stroke="#fff" strokeWidth="2.4" style={{ filter: "drop-shadow(0 0 6px #7fb2ff)" }}>
           <use href={`#${id("outline")}`} />
         </g>
@@ -163,6 +188,8 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
         </g>
       )}
     </svg>
+    {spin && WHEELS.map((w) => <SpinLayer key={w.cx} cx={w.cx} cy={w.cy} />)}
+    </div>
   );
 }
 

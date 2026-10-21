@@ -31,7 +31,7 @@ export function HowToFind({ standalone = false }: { standalone?: boolean }) {
       <div className="container-x relative">
         <SectionHead n="08" eyebrow="Как нас найти" title="Четыре шага от улицы до бокса" lead={`${site.address}. Въезд со стороны улицы — дальше по шагам.`} />
         <div ref={box} className="mt-12 grid gap-8 lg:grid-cols-12">
-          <Reveal className="lg:col-span-7">
+          <Reveal className="lg:col-span-7" blur={false}>
             <div className="relative border border-line bg-graphite/70">
               {["left-0 top-0 border-l border-t", "right-0 top-0 border-r border-t", "left-0 bottom-0 border-b border-l", "right-0 bottom-0 border-b border-r"].map((c) => (<span key={c} aria-hidden className={`absolute z-10 h-3 w-3 border-volt ${c}`} />))}
               <RouteMap step={step} />

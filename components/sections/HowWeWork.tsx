@@ -60,13 +60,17 @@ export function HowWeWork() {
             <p className="font-mono text-xs uppercase tracking-widest text-mute md:hidden">Этап {step + 1} / {steps.length}<br /><span className="text-chrome">{steps[step].title}</span></p>
           </div>
         </div>
-        <div ref={viewport} className="md:col-span-8 md:overflow-hidden md:[mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)] md:-mr-[calc((100vw-min(100vw,1360px))/2+40px)]">
+        <div className="relative md:col-span-8 md:-mr-[calc((100vw-min(100vw,1360px))/2+40px)]">
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-16 bg-gradient-to-r from-graphite to-transparent md:block" />
+          <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-24 bg-gradient-to-l from-graphite to-transparent md:block" />
+        <div ref={viewport} className="md:overflow-hidden">
           <div ref={track} className="flex flex-col gap-5 md:w-max md:flex-row md:gap-6 md:pr-[8vw]">
             {steps.map((s, i) => {
               const Icon = icons[s.icon];
               const on = i === step;
               return (
-                <article key={s.n} className={cn("chrome-edge relative flex flex-col p-6 transition-[opacity,transform,box-shadow] duration-500 md:min-h-[26rem] md:w-[min(34vw,26rem)] md:shrink-0 md:p-8", on ? "shadow-[0_0_40px_rgba(61,139,255,0.18)] md:-translate-y-1" : "md:opacity-60")}>
+                <article key={s.n} className={cn("chrome-edge relative flex flex-col p-6 transition-[opacity,transform] duration-500 md:min-h-[26rem] md:w-[min(34vw,26rem)] md:shrink-0 md:p-8", on ? "md:-translate-y-1" : "md:opacity-60")}>
+                  <span aria-hidden className={cn("pointer-events-none absolute -inset-px rounded-[10px] shadow-[0_0_40px_rgba(61,139,255,0.18)] transition-opacity duration-500", on ? "opacity-100" : "opacity-0")} />
                   <div className="flex items-start justify-between">
                     <span className="font-display text-6xl leading-none text-volt/80 md:text-7xl">{s.n}</span>
                     <Icon className="text-chrome" size={28} strokeWidth={1.4} />
@@ -78,6 +82,7 @@ export function HowWeWork() {
               );
             })}
           </div>
+        </div>
         </div>
       </div>
     </section>
