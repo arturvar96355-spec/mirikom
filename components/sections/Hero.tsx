@@ -60,7 +60,7 @@ export function Hero() {
       </div>
 
       {/* авто */}
-      <motion.div style={{ y: carY, x: px, willChange: "transform" }} className="relative z-0 -ml-[6%] mt-4 w-[112%] md:ml-0 md:absolute md:bottom-[5%] md:left-[34%] md:mt-0 md:w-[68%]">
+      <motion.div style={{ y: carY, x: px, willChange: "transform" }} className="relative z-0 -ml-[6%] mt-4 w-[112%] md:ml-0 md:absolute md:bottom-[5%] md:left-[33%] md:mt-0 md:w-[62%]">
         <CarBlueprint uid="hero" drawn beam spin xray={xray} dims className="relative h-auto w-full overflow-visible text-chrome" />
       </motion.div>
 
