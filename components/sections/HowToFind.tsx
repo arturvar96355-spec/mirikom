@@ -67,7 +67,8 @@ export function HowToFind({ standalone = false }: { standalone?: boolean }) {
                 );
               })}
             </div>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <p className="mt-5 text-sm text-chrome/75">Не нашли въезд — позвоните, подскажем: <a href={site.phoneHref} className="font-mono text-volt underline-offset-4 hover:underline">{site.phone}</a>. Парковка на территории есть.</p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               <Button href={site.yandexMapsHref} external><ExternalLink size={16} /> Открыть в Яндекс Картах</Button>
               <Button variant="ghost" href={site.yandexNavHref} external><Navigation size={16} /> Яндекс Навигатор</Button>
             </div>

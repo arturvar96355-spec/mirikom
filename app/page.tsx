@@ -6,6 +6,7 @@ import { SeriesPicker } from "@/components/sections/SeriesPicker";
 import { Symptoms } from "@/components/sections/Symptoms";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { ServicesPrices } from "@/components/sections/ServicesPrices";
+import { Amenities } from "@/components/sections/Amenities";
 import { Why } from "@/components/sections/Why";
 import { People } from "@/components/sections/People";
 import { AlsoServe } from "@/components/sections/AlsoServe";
@@ -27,6 +28,7 @@ export default function Home() {
         <Symptoms />
         <HowWeWork />
         <ServicesPrices />
+        <Amenities />
         <Why />
         <People />
         <AlsoServe />

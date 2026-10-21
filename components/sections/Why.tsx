@@ -16,7 +16,7 @@ export function Why() {
                 <span className="font-display text-6xl text-volt/40">0{i + 1}</span>
                 <h3 className="h-display mt-4 text-2xl md:text-3xl">{w.title}</h3>
                 {"note" in w && <p className="mt-3 text-sm text-chrome/70">{w.note}</p>}
-                <blockquote className="mt-6 border-l-2 border-volt/60 pl-4 text-chrome/80"><Rich>{w.quote}</Rich><footer className="mt-2 font-mono text-[11px] text-mute">Отзыв на Яндекс Картах</footer></blockquote>
+                <blockquote className="mt-6 border-l-2 border-volt/60 pl-4 text-chrome/80"><Rich>{`«${w.quote.text}»`}</Rich><footer className="mt-2 font-mono text-[11px] text-mute">{w.quote.author} — отзыв на Яндекс Картах</footer></blockquote>
               </article></Glint>
             </Reveal>
           ))}

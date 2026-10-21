@@ -19,9 +19,9 @@ export const site = {
   logoNote: "[настоящий логотип — от клиента]",
   yandexMapsHref: "https://yandex.ru/maps/-/CLtFmBOo",
   yandexNavHref: "https://yandex.ru/navi/?whatshere%5Bpoint%5D=37.394449%2C55.73292&whatshere%5Bzoom%5D=17",
-  rating: { value: 4.6, count: 262, badge: "Хорошее место 2026" },
+  rating: { value: 4.6, count: 262, reviews: 84, badge: "Хорошее место 2026" },
   diagnosticsPrice: 6000,
-  alsoServe: ["Mercedes-Benz", "Porsche", "Lexus", "Maybach"],
+  alsoServe: ["MINI", "Mercedes-Benz", "Maybach", "Porsche", "Audi", "Lamborghini", "Lexus", "Genesis"],
   disclaimer:
     "BMW — зарегистрированный товарный знак BMW AG. Mirikom — независимый сервис, не является официальным дилером.",
   conceptMark:

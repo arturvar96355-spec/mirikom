@@ -75,6 +75,9 @@ export function RouteMap({ step }: { step: number }) {
       <rect x="280" y="335" width="60" height="70" rx="3" fill={`url(#${hatch})`} stroke="#2a313b" />
       {/* ворота внутри */}
       <g stroke="#ff5a1f" strokeWidth="3"><path d="M428 372 L428 388 M476 372 L476 388" /></g>
+      {/* пост охраны на въезде */}
+      <rect x="408" y="396" width="34" height="24" rx="3" fill="rgba(255,90,31,0.14)" stroke="#ff5a1f" />
+      <text x="425" y="412" textAnchor="middle" fill="#ff5a1f" style={{ font: "500 10px var(--font-plex-mono)", letterSpacing: ".08em" }}>ОХР.</text>
       {/* вход в бокс */}
       <path d="M436 319 L468 319" stroke="#d9dee5" strokeWidth="4" />
       {/* маршрут */}

@@ -6,7 +6,7 @@ import { formatRub } from "@/lib/typograph";
 
 export function StatsBand() {
   const cells = [
-    { big: <><CountUp to={site.rating.value} decimals={1} /><span className="text-volt">★</span></>, cap: `${site.rating.count} оценки · Яндекс Карты` },
+    { big: <><CountUp to={site.rating.value} decimals={1} /><span className="text-volt">★</span></>, cap: `${site.rating.count} оценки · ${site.rating.reviews} отзыва` },
     { big: <span>с <CountUp to={site.since} format={(n) => String(Math.round(n))} /></span>, cap: "Работаем с BMW" },
     { big: <CountUp to={site.diagnosticsPrice} format={(n) => formatRub(Math.round(n / 100) * 100)} />, cap: "Комплексная диагностика" },
     { big: <span className="block text-[0.5em] leading-[1.1]">{site.rating.badge}</span>, cap: "Знак на Яндекс Картах" },
