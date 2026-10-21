@@ -1,4 +1,5 @@
 import { site } from "@/content/site";
+import { Roundel } from "@/components/art/Roundel";
 import { Rich } from "@/components/ui/Rich";
 
 export function Footer() {
@@ -8,7 +9,7 @@ export function Footer() {
         <div className="md:col-span-5">
           <div className="font-display text-3xl font-bold tracking-[0.14em]">MIRI<span className="text-volt">KOM</span></div>
           <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-mute">{site.tagline}</p>
-          <p className="mt-6 max-w-sm text-sm text-mute">{site.disclaimer}</p>
+          <div className="mt-6 flex max-w-md items-start gap-4"><Roundel text={false} className="mt-0.5 h-10 w-10 shrink-0" /><p className="text-sm text-mute">{site.disclaimer}</p></div>
         </div>
         <div className="space-y-2 text-sm md:col-span-4">
           <p className="eyebrow mb-3">Контакты</p>
@@ -25,7 +26,7 @@ export function Footer() {
           <p className="pt-2 text-mute"><Rich>{site.legalEntity}</Rich></p>
         </div>
       </div>
-      <div aria-hidden className="container-x mt-14 select-none overflow-hidden">
+      <div aria-hidden className="container-x mt-14 select-none overflow-hidden [contain:paint] [transform:translateZ(0)]">
         <div className="h-display whitespace-nowrap text-[clamp(3.2rem,21.5vw,19.5rem)] leading-[.85] text-transparent" style={{ WebkitTextStroke: "1px rgba(217,222,229,0.22)", backgroundImage: "linear-gradient(180deg, rgba(61,139,255,.5), transparent 75%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>MIRIKOM</div>
       </div>
       <div className="container-x mt-8 border-t border-line pt-6 text-xs text-mute">{site.conceptMark}</div>

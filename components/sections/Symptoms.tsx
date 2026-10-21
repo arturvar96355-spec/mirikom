@@ -19,6 +19,9 @@ export function Symptoms() {
   const zone = zones.find((z) => z.id === id)!;
   const { openBooking } = useBooking();
   const scroller = useRef<HTMLDivElement>(null);
+  const timer = useRef(0);
+  const hover = (z: string) => { clearTimeout(timer.current); timer.current = window.setTimeout(() => setId(z), 110); };
+  const cancel = () => clearTimeout(timer.current);
   const sec = useRef<HTMLElement>(null);
   usePauseOffscreen(sec);
   useEffect(() => { const el = scroller.current; if (el && window.innerWidth < 768) el.scrollLeft = el.scrollWidth; }, []);
@@ -54,12 +57,12 @@ export function Symptoms() {
                 const on = z.id === id;
                 return (
                   <div key={z.id}>
-                    <button aria-label={z.name} aria-pressed={on} onClick={() => setId(z.id)} onMouseEnter={() => setId(z.id)} onFocus={() => setId(z.id)}
+                    <button aria-label={z.name} aria-pressed={on} onClick={() => setId(z.id)} onMouseEnter={() => hover(z.id)} onMouseLeave={cancel} onFocus={() => setId(z.id)}
                       className="group absolute grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center" style={{ left: pct(a.x, 1200), top: pct(a.y, 460) }}>
                       <span aria-hidden className="absolute h-5 w-5 rounded-full border border-volt" style={{ animation: "pulse-ring 1.6s ease-out infinite" }} />
                       <span aria-hidden className={`relative h-3 w-3 rounded-full border border-graphite transition-all ${on ? "scale-125 bg-volt shadow-[0_0_14px_#3d8bff]" : "bg-chrome"}`} />
                     </button>
-                    <button tabIndex={-1} aria-hidden onClick={() => setId(z.id)} onMouseEnter={() => setId(z.id)}
+                    <button tabIndex={-1} aria-hidden onClick={() => setId(z.id)} onMouseEnter={() => hover(z.id)} onMouseLeave={cancel}
                       className={`absolute hidden -translate-y-1/2 whitespace-nowrap border px-2 py-1 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors md:block ${z.label.align === "start" ? "" : "-translate-x-1/2"} ${on ? "border-volt bg-volt/15 text-white" : "border-line bg-graphite/80 text-mute hover:text-chrome"}`}
                       style={{ left: pct(z.label.x, 1200), top: pct(z.label.y, 460) }}>{z.name}</button>
                   </div>

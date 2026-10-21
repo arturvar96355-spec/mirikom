@@ -25,7 +25,7 @@ export function Gauge({ step, total, label, needleRef, arcRef }: Props & { needl
         const [x0, y0] = pt(a, R - 12), [x1, y1] = pt(a, R - (long ? 24 : 18));
         return <line key={i} x1={x0} y1={y0} x2={x1} y2={y1} stroke={long ? "#d9dee5" : "#8a94a3"} strokeWidth={long ? 1.6 : 0.8} />;
       })}
-      <g ref={needleRef}>
+      <g ref={needleRef} style={{ transformOrigin: `${CX}px ${CY}px`, transformBox: "view-box", transform: `rotate(${START}deg)` }}>
         <path d={`M${CX - 4} ${CY} L${CX + R - 20} ${CY - 1.2} L${CX + R - 20} ${CY + 1.2} Z`} fill="#ff5a1f" />
       </g>
       <circle cx={CX} cy={CY} r="9" fill="#1a1f26" stroke="#d9dee5" strokeWidth="1.2" />

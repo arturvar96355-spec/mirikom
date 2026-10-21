@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Phone } from "lucide-react";
 import { nav, site } from "@/content/site";
 import { Button } from "@/components/ui/Button";
+import { Roundel } from "@/components/art/Roundel";
 import { useBooking } from "@/lib/booking-context";
 
 export function Header() {
@@ -29,7 +30,7 @@ export function Header() {
         <div className="container-x flex h-16 items-center justify-between gap-6 md:h-20">
           <a href="/" className="group flex flex-col leading-none">
             <span className="font-display text-xl font-bold tracking-[0.14em] text-chrome md:text-2xl">MIRI<span className="text-volt">KOM</span></span>
-            <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-mute">{site.tagline}</span>
+            <span className="mt-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-mute"><Roundel text={false} className="h-3.5 w-3.5" />{site.tagline}</span>
           </a>
           <nav aria-label="Основное" className="hidden items-center gap-8 lg:flex">
             {nav.map((n) => (

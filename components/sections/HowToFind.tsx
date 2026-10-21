@@ -15,6 +15,7 @@ export function HowToFind({ standalone = false }: { standalone?: boolean }) {
   const [step, setStep] = useState(0);
   const [auto, setAuto] = useState(true);
   const box = useRef<HTMLDivElement>(null);
+  const hov = useRef(0);
   const inView = useInView(box, { amount: 0.4 });
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export function HowToFind({ standalone = false }: { standalone?: boolean }) {
                 const on = i === step;
                 return (
                   <div key={r.n}>
-                    <button role="tab" aria-selected={on} onClick={() => pick(i)} onMouseEnter={() => !on && pick(i)}
+                    <button role="tab" aria-selected={on} onClick={() => pick(i)} onMouseEnter={() => { if (!on) { clearTimeout(hov.current); hov.current = window.setTimeout(() => pick(i), 140); } }} onMouseLeave={() => clearTimeout(hov.current)}
                       className={cn("chrome-edge relative flex w-full flex-col overflow-hidden p-4 text-left transition-colors", on ? "bg-[#10213d]" : "hover:bg-[#222933]")}>
                       <span className="flex items-center gap-4">
                         <span className={cn("grid h-11 w-11 shrink-0 place-items-center rounded-full border font-mono text-lg transition-colors", on ? "border-volt bg-volt text-white" : "border-line text-chrome")}>{r.n}</span>

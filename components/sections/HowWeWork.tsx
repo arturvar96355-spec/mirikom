@@ -25,7 +25,7 @@ export function HowWeWork() {
       gsap.registerPlugin(ScrollTrigger);
       const mm = gsap.matchMedia();
       const apply = (p: number) => {
-        gsap.set(needle.current, { rotation: START + SWEEP * p, svgOrigin: "110 110" });
+        if (needle.current) needle.current.style.transform = `rotate(${START + SWEEP * p}deg)`;
         if (arc.current) arc.current.style.strokeDashoffset = String(1 - p);
         const s = Math.min(steps.length - 1, Math.floor(p * steps.length));
         setStep((o) => (o === s ? o : s));

@@ -4,6 +4,7 @@ import "./globals.css";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { BookingProvider } from "@/lib/booking-context";
 import dynamic from "next/dynamic";
+import { ScrollIdle } from "@/components/motion/ScrollIdle";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 
 const Cursor = dynamic(() => import("@/components/motion/Cursor").then((m) => m.Cursor));
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BookingProvider>
           <LenisProvider>{children}</LenisProvider>
           <ScrollProgress />
+          <ScrollIdle />
           <Cursor />
           <BookingModal />
         </BookingProvider>
