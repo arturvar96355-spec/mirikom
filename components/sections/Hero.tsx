@@ -48,7 +48,7 @@ export function Hero() {
       <div className="container-x relative z-10 flex flex-1 flex-col justify-center pt-36 md:pt-40">
         <div className="eyebrow mb-5 flex items-center gap-3"><span className="inline-block h-px w-10 bg-volt" />Кунцево · Молодогвардейская, 61с17</div>
         <h1 className="h-display max-w-[16ch] text-[clamp(2.9rem,7.6vw,7.2rem)] text-chrome">
-          <SplitText text={typograph("Сервис BMW с 2000 года")} delay={0.05} />
+          <SplitText text={typograph("Сервис BMW с 2000 года")} delay={0.05} accent="BMW" />
         </h1>
         <p style={{ animationDelay: ".35s" }} className="rise mt-6 max-w-xl text-lg text-chrome/80 md:text-xl">
           {typograph("Чиним то, что нужно, — и объясняем почему. Молодогвардейская, 61с17")}

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion, type MotionValue } from "motion/react";
 import {
-  BODY, GLASS_FRONT, GLASS_REAR, MIRROR, PANEL_LINES, HANDLES, HEADLIGHT, TAILLIGHT, BUMPER_VENT, EXHAUST_TIP,
+  BODY, GLASS_FRONT, GLASS_REAR, MIRROR, PANEL_LINES, SWAGE, HANDLES, HEADLIGHT, TAILLIGHT, BUMPER_VENT, EXHAUST_TIP,
   CABIN, XRAY, WHEELS, GROUND, VB,
 } from "./carGeometry";
 
@@ -25,10 +25,11 @@ type Props = {
 const rad = (d: number) => (d * Math.PI) / 180;
 
 function spokePaths(cx: number, cy: number) {
-  return Array.from({ length: 5 }, (_, i) => {
-    const a = i * 72 - 90;
+  // двойные спицы (стиль «Doppelspeiche»): 5 пар тонких конических спиц
+  return Array.from({ length: 10 }, (_, i) => {
+    const a = Math.floor(i / 2) * 72 - 90 + (i % 2 ? 9 : -9);
     const p = (r: number, da: number) => `${(cx + Math.cos(rad(a + da)) * r).toFixed(1)} ${(cy + Math.sin(rad(a + da)) * r).toFixed(1)}`;
-    return `M${p(15, -13)} L${p(39, -5)} L${p(39, 5)} L${p(15, 13)} Z`;
+    return `M${p(15, -4)} L${p(39, -2.2)} L${p(39, 2.2)} L${p(15, 4)} Z`;
   });
 }
 function Bolts({ cx, cy }: { cx: number; cy: number }) {
@@ -111,7 +112,7 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
         <linearGradient id={id("ground")} x1="40" y1="0" x2="1160" y2="0" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#3d8bff" stopOpacity="0" /><stop offset=".5" stopColor="#8fb8ff" stopOpacity=".7" /><stop offset="1" stopColor="#3d8bff" stopOpacity="0" />
         </linearGradient>
-        <radialGradient id={id("lamp")} cx="1120" cy="314" r="140" gradientUnits="userSpaceOnUse">
+        <radialGradient id={id("lamp")} cx="1106" cy="312" r="140" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#cfe3ff" stopOpacity=".9" /><stop offset=".25" stopColor="#6fa8ff" stopOpacity=".35" /><stop offset="1" stopColor="#3d8bff" stopOpacity="0" />
         </radialGradient>
         <radialGradient id={id("shadow")} cx="600" cy={GROUND} r="560" gradientUnits="userSpaceOnUse" gradientTransform={`translate(0 ${GROUND}) scale(1 .055) translate(0 ${-GROUND})`}>
@@ -136,7 +137,7 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
       </g>
 
       {/* свет фар */}
-      <ellipse cx="1128" cy="318" rx="110" ry="64" fill={`url(#${id("lamp")})`} className={drawn ? "lamp" : ""} />
+      <ellipse cx="1112" cy="312" rx="110" ry="64" fill={`url(#${id("lamp")})`} className={drawn ? "lamp" : ""} />
 
       {/* кузов */}
       <path d={BODY} fill={`url(#${id("body")})`} stroke="none" className={drawn ? "fill-in" : ""} />
@@ -162,12 +163,12 @@ export function CarBlueprint({ uid, className, drawn, beam, spin, xray = 1, acti
         {HANDLES.map((d, i) => <path key={i} d={d} strokeWidth="3" strokeOpacity=".7" />)}
         <path d={MIRROR} fill="#1a1f26" />
         <path d={BUMPER_VENT} strokeOpacity=".7" /><path d={EXHAUST_TIP} />
-        {Array.from({ length: 5 }, (_, i) => <path key={i} d={`M${1070 + i * 8} 350 L${1070 + i * 8} 358`} strokeOpacity=".5" />)}
+        {Array.from({ length: 5 }, (_, i) => <path key={i} d={`M${1062 + i * 7} 352 L${1062 + i * 7} 360`} strokeOpacity=".5" />)}
       </g>
       <path d={HEADLIGHT} fill="#cfe3ff" fillOpacity=".12" stroke="#cfe3ff" strokeWidth="1.2" className={drawn ? "late" : ""} />
       <path d={TAILLIGHT} fill="#ff5a1f" fillOpacity=".25" stroke="#ff5a1f" strokeOpacity=".9" strokeWidth="1.2" className={drawn ? "late" : ""} />
       {/* блик на плече */}
-      <path d="M220 270 C500 248 800 248 1062 278" stroke={`url(#${id("spec")})`} strokeWidth="1.6" className={drawn ? "late" : ""} />
+      <path d={SWAGE} stroke={`url(#${id("spec")})`} strokeWidth="1.6" className={drawn ? "late" : ""} />
 
       {/* колёса */}
       <g stroke="#d9dee5" strokeOpacity=".9" strokeWidth="1.2" color="#d9dee5" className={drawn ? "wheels" : ""}>
@@ -198,7 +199,7 @@ function XrayLayer({ id, on, opacity, drawn }: { id: (s: string) => string; on: 
   const sty = typeof opacity === "number" ? { opacity } : { opacity };
   return (
     <motion.g style={sty} className={drawn ? "late" : ""}>
-      <g className="xr" data-state={on("engine")}>
+      <g className="xr" data-state={on("engine")} transform="translate(-14 4)">
         <path d={E.head} /><path d={E.block} /><path d={E.radiator} /><path d={E.intake} />
         {[0, 1, 2, 3, 4].map((i) => <path key={i} d={`M${1086} ${298 + i * 11} L1100 ${298 + i * 11}`} strokeOpacity=".6" />)}
         {E.cylinders.map((x) => (
@@ -209,7 +210,7 @@ function XrayLayer({ id, on, opacity, drawn }: { id: (s: string) => string; on: 
       <g className="xr" data-state={on("gearbox")}>
         <path d={G.bell} /><path d={G.main} /><path d={G.tail} />
         <path d="M790 308 L790 346 M812 306 L812 348 M836 304 L836 348" strokeOpacity=".5" />
-        <path d={G.shaft} strokeWidth="2.4" /><circle cx="560" cy="333" r="5" /><circle cx="440" cy="335" r="5" /><circle cx="344" cy="336" r="6" />
+        <path d={G.shaft} strokeWidth="2.4" /><path d="M254 350 L296 350 L302 368 L248 368 Z" /><path d="M206 376 L344 376" strokeOpacity=".7" /><circle cx="560" cy="333" r="5" /><circle cx="440" cy="335" r="5" /><circle cx="344" cy="336" r="6" />
         <path d="M410 366 L520 366 L526 372 L404 372 Z M100 372 L404 369" strokeOpacity=".7" />
       </g>
       <g className="xr" data-state={on("suspension")}>

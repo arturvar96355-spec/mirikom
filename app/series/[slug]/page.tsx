@@ -13,7 +13,7 @@ export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const s = getSeries((await params).slug);
-  return { title: s ? `ТО ${s.title} — Mirikom` : "Mirikom" };
+  return { title: s ? `ТО BMW ${s.title} — Mirikom` : "Mirikom" };
 }
 
 export default async function SeriesPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -25,7 +25,7 @@ export default async function SeriesPage({ params }: { params: Promise<{ slug: s
         <div aria-hidden className="bg-mm absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_30%,#000,transparent)]" />
         <div className="container-x relative">
           <a href="/#series" className="eyebrow hover:text-white">← Все серии</a>
-          <h1 className="h-display mt-4 text-[clamp(3rem,9vw,8rem)]">ТО {s.title}</h1>
+          <h1 className="h-display mt-4 text-[clamp(3rem,9vw,8rem)]"><span className="text-volt">BMW</span> {s.title}<span className="mt-2 block font-mono text-sm tracking-[0.2em] text-mute">ПЛАНОВОЕ ТО И РЕМОНТ</span></h1>
           <div className="mt-10 grid gap-10 lg:grid-cols-12">
             <div className="chrome-edge p-6 md:p-8 lg:col-span-6"><SeriesPanel s={s} /></div>
             <div className="hidden text-chrome/40 lg:col-span-6 lg:block"><CarBlueprint uid="ser" xray={0.8} className="mt-10 h-auto w-full" /></div>

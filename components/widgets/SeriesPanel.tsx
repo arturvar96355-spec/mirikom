@@ -12,8 +12,8 @@ export function SeriesPanel({ s }: { s: Series }) {
     <div>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="eyebrow">Плановое ТО</p>
-          <h3 className="h-display mt-2 text-4xl md:text-5xl">{s.title}</h3>
+          <p className="eyebrow">Плановое ТО · BMW</p>
+          <h3 className="h-display mt-2 text-4xl md:text-5xl"><span className="text-volt">BMW</span> {s.title}</h3>
           <p className="mt-2 text-sm text-mute"><Rich>{s.body}</Rich></p>
         </div>
         <div className="font-display text-6xl leading-none text-volt/30 md:text-7xl" aria-hidden>{s.label}</div>

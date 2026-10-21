@@ -1,6 +1,7 @@
 import { Header } from "@/components/sections/Header";
 import { Hero } from "@/components/sections/Hero";
 import { StatsBand } from "@/components/sections/StatsBand";
+import { BrandBand } from "@/components/sections/BrandBand";
 import { SeriesPicker } from "@/components/sections/SeriesPicker";
 import { Symptoms } from "@/components/sections/Symptoms";
 import { HowWeWork } from "@/components/sections/HowWeWork";
@@ -21,6 +22,7 @@ export default function Home() {
       <main>
         <Hero />
         <StatsBand />
+        <BrandBand />
         <SeriesPicker />
         <Symptoms />
         <HowWeWork />

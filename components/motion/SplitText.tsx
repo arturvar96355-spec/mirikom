@@ -12,7 +12,7 @@ const word: Variants = {
  * inView=false → чистый CSS (виден сразу после загрузки стилей, без ожидания JS — важно для LCP);
  * inView=true → Motion при входе во вьюпорт.
  */
-export function SplitText({ text, className, delay = 0, as = "span", inView = false }: { text: string; className?: string; delay?: number; as?: "span" | "h1" | "h2" | "h3"; inView?: boolean }) {
+export function SplitText({ text, className, delay = 0, as = "span", inView = false, accent }: { text: string; className?: string; delay?: number; as?: "span" | "h1" | "h2" | "h3"; inView?: boolean; accent?: string }) {
   const words = text.split(" ");
   const plain = text.replace(/\u00A0/g, " ");
   if (!inView) {
@@ -22,7 +22,7 @@ export function SplitText({ text, className, delay = 0, as = "span", inView = fa
         <span className="sr-only">{plain}</span>
         {words.map((w, i) => (
           <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
-            <span className="word-up inline-block" style={{ animationDelay: `${delay + i * 0.05}s` }}>{w}</span>
+            <span className={`word-up inline-block${accent && w.replace(/[^A-Za-z]/g, "") === accent ? " text-volt" : ""}`} style={{ animationDelay: `${delay + i * 0.05}s` }}>{w}</span>
             {i < words.length - 1 ? "\u00A0" : ""}
           </span>
         ))}
@@ -35,7 +35,7 @@ export function SplitText({ text, className, delay = 0, as = "span", inView = fa
       <span className="sr-only">{plain}</span>
       {words.map((w, i) => (
         <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
-          <motion.span className="inline-block" variants={word} custom={{ i, d: delay }}>{w}</motion.span>
+          <motion.span className={`inline-block${accent && w.replace(/[^A-Za-z]/g, "") === accent ? " text-volt" : ""}`} variants={word} custom={{ i, d: delay }}>{w}</motion.span>
           {i < words.length - 1 ? "\u00A0" : ""}
         </span>
       ))}

@@ -18,7 +18,7 @@ export const seriesLabel = (slug: string) => series.find((s) => s.slug === slug)
 export function buildBookingText(d: BookingData): string {
   const lines = [
     "Заявка с сайта Mirikom",
-    d.series && `Серия: ${seriesLabel(d.series)}`,
+    d.series && `Серия: BMW ${seriesLabel(d.series)}`,
     d.year && `Год: ${d.year}`,
     d.mileage && `Пробег: ${d.mileage} км`,
     d.zone && `Зона: ${d.zone}`,

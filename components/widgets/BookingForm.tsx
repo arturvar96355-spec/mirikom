@@ -79,9 +79,9 @@ export function BookingForm({ onDone }: { onDone?: () => void }) {
         </motion.div>
       ) : (
         <motion.form key="form" onSubmit={submit} noValidate initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid gap-5 sm:grid-cols-2">
-          <Field label="Серия">
+          <Field label="Серия BMW">
             <select className={inputCls} value={d.series} onChange={(e) => set("series", e.target.value)}>
-              <option value="">Выберите серию</option>
+              <option value="">Выберите серию BMW</option>
               {series.map((s) => <option key={s.slug} value={s.slug}>{s.title}</option>)}
             </select>
           </Field>

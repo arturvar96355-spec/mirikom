@@ -26,7 +26,7 @@ export function Symptoms() {
     <section ref={sec} className="relative border-y border-line bg-[#0e1115] py-24 md:py-36">
       <div aria-hidden className="bg-mm absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000,transparent)]" />
       <div className="container-x relative">
-        <SectionHead n="02" eyebrow="Диагностика" title="Что беспокоит?" lead="Нажмите на узел, который шумит, стучит или горит на панели. Покажем типичные симптомы и запишем на диагностику." />
+        <SectionHead n="02" eyebrow="Диагностика" title="Что беспокоит в Вашей BMW?" lead="Нажмите на узел, который шумит, стучит или горит на панели. Покажем типичные симптомы и запишем на диагностику." />
 
         <Reveal className="mt-12" blur={false}>
           <div className="relative border border-line bg-graphite/60">

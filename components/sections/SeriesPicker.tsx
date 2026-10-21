@@ -12,7 +12,7 @@ export function SeriesPicker() {
   return (
     <section id="series" className="relative scroll-mt-20 py-24 md:py-36">
       <div className="container-x">
-        <SectionHead n="01" eyebrow="Серия" title="Сколько стоит ТО на Вашу машину?" lead="Выберите серию — покажем состав планового обслуживания и цены «от»." />
+        <SectionHead n="01" eyebrow="Серия" title="Сколько стоит ТО на Вашу BMW?" lead="Выберите серию BMW — покажем состав планового обслуживания и цены «от»." />
         <LayoutGroup>
           <div className="mt-12 grid gap-8 lg:grid-cols-12">
             <div className="min-w-0 lg:col-span-7">
@@ -24,7 +24,7 @@ export function SeriesPicker() {
                       className={cn("chrome-edge glint relative grid aspect-[4/5] w-24 shrink-0 place-items-center overflow-hidden transition-colors md:w-auto", on ? "bg-[#10213d] shadow-[0_0_0_1px_var(--color-volt),0_0_28px_rgba(61,139,255,0.45),inset_0_2px_18px_rgba(0,0,0,0.6)]" : "hover:bg-[#222933]")}
                       onMouseMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`); e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`); }}>
                       <span className={cn("font-display text-4xl font-bold md:text-5xl", on ? "text-white" : "text-chrome/85")}>{s.label}</span>
-                      <span className="absolute bottom-2 left-0 right-0 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-mute">{/^\d$/.test(s.label) ? "series" : s.slug === "m" || s.slug === "i" || s.slug === "z" ? "line" : "x"}</span>
+                      <span className="absolute bottom-2 left-0 right-0 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-mute">BMW</span>
                       {on && <span className="absolute inset-x-3 top-2 h-px bg-volt" />}
                     </motion.button>
                   );

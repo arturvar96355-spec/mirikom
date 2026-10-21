@@ -124,3 +124,7 @@ body {
 
 /* вне экрана — все бесконечные анимации на паузе */
 [data-paused="1"] *, [data-paused="1"] { animation-play-state: paused !important; }
+
+/* вид спереди: «ноздри» и «глазки» */
+.kid-edge { stroke: #5aa0ff; stroke-width: 1.6; filter: drop-shadow(0 0 4px rgba(61,139,255,.7)); }
+.eye { stroke: #cfe3ff; stroke-width: 1.6; fill: rgba(207,227,255,.15); }
